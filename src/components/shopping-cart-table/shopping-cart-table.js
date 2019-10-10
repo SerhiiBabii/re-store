@@ -3,7 +3,7 @@ import "./shopping-cart-table.css";
 import { connect } from "react-redux";
 import {
   bookDeletedFromCart,
-  bookIncreasedToCart,
+  bookAddedToCart,
   bookDecreasedFromCart
 } from "../../actions";
 
@@ -12,13 +12,19 @@ const ShoppingCartTable = ({
   total,
   onIncrease,
   onDecrease,
-  onDelete
+  onDelete,
+  isImage
 }) => {
   const renderRow = (item, index) => {
-    const { id, title, count, total } = item;
+    const { id, title, count, total, coverImage } = item;
     return (
       <tr key={id}>
         <td>{index + 1}</td>
+        {isImage ? (
+          <td>
+            <img className="h-50 p-2" src={coverImage} alt="CoverImage" />
+          </td>
+        ) : null}
         <td>{title}</td>
         <td>{count}</td>
         <td>${total}</td>
@@ -52,6 +58,7 @@ const ShoppingCartTable = ({
         <thead>
           <tr>
             <th>#</th>
+            {isImage ? <th>Image</th> : null}
             <th>Item</th>
             <th>Count</th>
             <th>Total</th>
@@ -80,7 +87,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(bookDecreasedFromCart(id));
     },
     onIncrease: id => {
-      dispatch(bookIncreasedToCart(id));
+      dispatch(bookAddedToCart(id));
     },
     onDelete: id => {
       dispatch(bookDeletedFromCart(id));
