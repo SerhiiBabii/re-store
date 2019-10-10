@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+// import { HashRouter as Router } from "react-router-dom"; // for git-page
 
 import App from "./components/app";
 import ErrorBoudry from "./components/error-boundry";
@@ -16,7 +17,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ErrorBoudry>
       <BookstoreServiceProvider value={bookstoreService}>
-        <Router>
+        <Router basename="/restore/">
           <App />
         </Router>
       </BookstoreServiceProvider>
