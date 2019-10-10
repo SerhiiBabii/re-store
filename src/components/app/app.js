@@ -2,13 +2,14 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { HomePage, CartPage } from "../pages";
 import ShopHeader from "../shop-header";
+import { connect } from "react-redux";
 
 import "./app.css";
 
-const App = () => {
+const App = ({ numItems, total }) => {
   return (
     <main role="main" className="container">
-      <ShopHeader numItems={5} total={200} />
+      <ShopHeader numItems={numItems} total={total} />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/cart" component={CartPage} />
@@ -17,4 +18,11 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = ({ shoppingCart: { orderTotal, quantityTotal } }) => {
+  return {
+    numItems: quantityTotal,
+    total: orderTotal
+  };
+};
+
+export default connect(mapStateToProps)(App);
